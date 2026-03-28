@@ -1,0 +1,28 @@
+html,body {
+    margin: 0;
+    padding: 0;
+    height : 100%
+}
+
+nav{
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    font-family: sans-serif;
+    height: 5%;
+    font-size: large;
+    color: black;
+    background: linear-gradient(to right,rgb(18, 70, 228),rgb(243, 147, 147));
+    
+}
+nav a {
+    color: white;
+    text-decoration: none;
+}
+nav a:hover{
+    color:white;
+    background-color: aqua;
+    margin: 0;
+    padding: 0;
+
+}
