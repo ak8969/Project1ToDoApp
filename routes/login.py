@@ -1,13 +1,28 @@
-from flask import Blueprint,render_template, request
+from flask import Blueprint,render_template, request,session,flash,redirect,url_for
 
+from werkzeug.security import generate_password_hash,check_password_hash
 login_bp =Blueprint('login',__name__)
 
-@login_bp.route('/',methods=['GET','POST'])
+
+users = {
+    "alice": generate_password_hash('alice123'),
+    "bob" : generate_password_hash('bob123')
+}
+@login_bp.route('/login',methods=['GET','POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
+        username = request.form.get('username')
         password = request.form.get('password')
-        print(email,password)
-        return render_template('index.html')
-    else:
-        return render_template('index.html')
+        if username in users and check_password_hash(users[username],password):
+            session['user']=username
+            return redirect(url_for('home.home'))
+        else:
+            flash('Invalid Password')
+            return redirect(url_for('login.login'))
+    
+    return render_template('login.html')
+    
+@login_bp.route('/logout')
+def logout():
+    session.pop('user',None)
+    return redirect(url_for('login.login'))
